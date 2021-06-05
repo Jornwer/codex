@@ -1,0 +1,19 @@
+{
+  "properties": [
+    {
+      "name": "jwt.secret",
+      "type": "java.lang.String",
+      "description": "Secret key for JWT."
+    },
+    {
+      "name": "jwt.header",
+      "type": "java.lang.String",
+      "description": "Header name for storing JWT."
+    },
+    {
+      "name": "jwt.expiration",
+      "type": "java.lang.Long",
+      "description": "Number of milliseconds before JWT expires."
+    }
+  ]
+}
