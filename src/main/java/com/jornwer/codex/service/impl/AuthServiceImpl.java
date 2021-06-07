@@ -28,9 +28,8 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthenticationResponse signup(@NotNull UserPayload request) throws DuplicateException {
-        if (isUserRegistered(request.getUsername())) {
-            throw new DuplicateException("User with this username already exists");
-        }
+        isUserRegistered(request);
+
         User user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
@@ -50,8 +49,11 @@ public class AuthServiceImpl implements AuthService {
         return generateAuthenticationToken(user.getUsername(), role);
     }
 
-    private boolean isUserRegistered(String username) {
-        return userRepository.findByUsername(username).isPresent();
+    private void isUserRegistered(UserPayload payload) throws DuplicateException {
+        userRepository.findByUsername(payload.getUsername())
+                .orElseThrow(() -> new DuplicateException("User with this username already exists"));
+        userRepository.findByEmail(payload.getEmail())
+                .orElseThrow(() -> new DuplicateException("User with this email already exists"));
     }
 
     private AuthenticationResponse generateAuthenticationToken(String username, Role role) {
