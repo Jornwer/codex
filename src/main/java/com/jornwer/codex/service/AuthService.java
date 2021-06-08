@@ -6,7 +6,7 @@ import com.jornwer.codex.dto.UserPayload;
 import com.jornwer.codex.exception.DuplicateException;
 
 public interface AuthService {
-    AuthenticationResponse signup(UserPayload request) throws DuplicateException;
+    AuthenticationResponse signup(UserPayload request);
 
     AuthenticationResponse login(LoginRequest request);
 }

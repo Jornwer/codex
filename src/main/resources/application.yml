@@ -12,4 +12,4 @@ spring:
 jwt:
   secret: verySecretPhrase
   header: Authorization
-  expiration: 300000
+  expiration: 3000000

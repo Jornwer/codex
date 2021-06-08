@@ -7,6 +7,7 @@ import com.jornwer.codex.model.Item;
 import java.util.List;
 
 public interface ItemService {
-    Item add(ItemDto item) throws DuplicateException;
+    Item add(ItemDto item);
     List<Item> findAll();
+    Item findById(Long id);
 }

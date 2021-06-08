@@ -2,6 +2,7 @@ package com.jornwer.codex.service.impl;
 
 import com.jornwer.codex.dto.ItemDto;
 import com.jornwer.codex.exception.DuplicateException;
+import com.jornwer.codex.exception.NotFoundException;
 import com.jornwer.codex.model.Item;
 import com.jornwer.codex.model.Tag;
 import com.jornwer.codex.repository.ItemRepository;
@@ -23,7 +24,7 @@ public class ItemServiceImpl implements ItemService {
     private final TagService tagService;
 
     @Override
-    public Item add(ItemDto dto) throws DuplicateException {
+    public Item add(ItemDto dto) {
         if (itemRepository.existsByName(dto.getName())) {
             throw new DuplicateException("Item name should be unique");
         }
@@ -39,5 +40,11 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Item> findAll() {
         return itemRepository.findAll();
+    }
+
+    @Override
+    public Item findById(Long id) {
+        return itemRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Product with id =  " + id + " not found"));
     }
 }

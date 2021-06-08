@@ -16,13 +16,13 @@ import javax.validation.Valid;
 
 @Validated
 @RestController
-@RequestMapping("/auth")
 @AllArgsConstructor
+@RequestMapping("/auth")
 public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signup")
-    public AuthenticationResponse signup(@Valid @RequestBody UserPayload userPayload) throws DuplicateException {
+    public AuthenticationResponse signup(@Valid @RequestBody UserPayload userPayload) {
         return authService.signup(userPayload);
     }
 

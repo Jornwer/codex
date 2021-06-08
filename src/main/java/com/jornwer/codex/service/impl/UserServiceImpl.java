@@ -1,10 +1,12 @@
 package com.jornwer.codex.service.impl;
 
+import com.jornwer.codex.exception.NotFoundException;
 import com.jornwer.codex.model.Role;
 import com.jornwer.codex.model.User;
 import com.jornwer.codex.repository.UserRepository;
 import com.jornwer.codex.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,4 +29,10 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @Override
+    public User getCurrentUser() {
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByUsername(name)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+    }
 }

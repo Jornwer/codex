@@ -12,13 +12,13 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("items")
+@RequestMapping("/items")
 public class ItemController {
     private final ItemService itemService;
 
-    @PostMapping(value = "add")
+    @PostMapping(value = "/add")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public Item addItem(@RequestBody ItemDto item) throws DuplicateException {
+    public Item addItem(@RequestBody ItemDto item) {
         return itemService.add(item);
     }
 

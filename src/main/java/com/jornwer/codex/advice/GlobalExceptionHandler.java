@@ -13,7 +13,7 @@ public class GlobalExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler(Exception.class)
-    public ModelAndView handleNoRecordFoundException(Exception ex) {
+    public ModelAndView handleException(Exception ex) {
         ModelAndView modelAndView = new ModelAndView(new MappingJackson2JsonView());
         modelAndView.setStatus(HttpStatus.BAD_REQUEST);
         modelAndView.addObject("message", ex.getMessage());
