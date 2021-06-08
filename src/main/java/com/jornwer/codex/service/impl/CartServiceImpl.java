@@ -6,6 +6,7 @@ import com.jornwer.codex.model.User;
 import com.jornwer.codex.repository.CartRepository;
 import com.jornwer.codex.service.CartService;
 import com.jornwer.codex.service.ItemService;
+import com.jornwer.codex.service.MailService;
 import com.jornwer.codex.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
     private final UserService userService;
     private final ItemService itemService;
+    private final MailService mailService;
 
     @Override
     public Cart addToCart(int id) {
@@ -63,5 +65,20 @@ public class CartServiceImpl implements CartService {
         Optional<Cart> optionalCart = cartRepository.findByUser(user);
 
         return optionalCart.orElse(null);
+    }
+
+    @Override
+    public void buyItems() {
+        User user = userService.getCurrentUser();
+        Optional<Cart> optionalCart = cartRepository.findByUser(user);
+        StringBuilder mailText = new StringBuilder();
+
+        if (optionalCart.isPresent()) {
+            mailText.append("Your items:");
+            optionalCart.get().getItems().forEach(item -> mailText.append('\n').append(item.getName()).append('\n'));
+            cartRepository.delete(optionalCart.get());
+        }
+
+        mailService.sendMailTo(user.getEmail(), mailText.toString());
     }
 }

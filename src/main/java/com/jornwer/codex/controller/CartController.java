@@ -29,4 +29,10 @@ public class CartController {
     public Cart viewCart() {
         return cartService.viewCart();
     }
+
+    @PostMapping("/buy")
+    @PreAuthorize("isAuthenticated()")
+    public void buyItems() {
+        cartService.buyItems();
+    }
 }

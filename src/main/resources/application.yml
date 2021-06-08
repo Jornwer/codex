@@ -13,3 +13,10 @@ jwt:
   secret: verySecretPhrase
   header: Authorization
   expiration: 3000000
+
+admin:
+  email: rdejozxxgbryoaonvc@mhzayt.online
+
+email:
+  username: springboottestsamplemail@gmail.com
+  password: VeryHardPassword123
