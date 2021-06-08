@@ -31,13 +31,14 @@ public class ItemController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public Item editItem(@PathVariable long id,
                          @RequestBody ItemDto item,
-                         @RequestParam(value = "force", defaultValue = "false", required = false) boolean force) {
+                         @RequestParam(required = false) boolean force) {
         return itemService.edit(id, item, force);
     }
 
     @GetMapping
     @PreAuthorize("isAuthenticated()")
-    public List<Item> findAll() {
-        return itemService.findAll();
+    public List<Item> findAll(@RequestParam(required = false) String description,
+                              @RequestParam(required = false) List<String> tags) {
+        return itemService.findAll(description, tags);
     }
 }

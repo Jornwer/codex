@@ -6,6 +6,7 @@ import com.jornwer.codex.service.TagService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,9 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public Set<Tag> mapTags(Set<String> names) {
+        if (names == null) {
+            return new HashSet<>();
+        }
         return names.stream()
                 .map(this::mapTag)
                 .collect(Collectors.toSet());

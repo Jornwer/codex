@@ -10,11 +10,13 @@ import com.jornwer.codex.service.CartService;
 import com.jornwer.codex.service.ItemService;
 import com.jornwer.codex.service.MailService;
 import com.jornwer.codex.service.TagService;
-import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -48,11 +50,6 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> findAll() {
-        return itemRepository.findAll();
-    }
-
-    @Override
     public Item findById(Long id) {
         return itemRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Item with id =  " + id + " not found"));
@@ -76,6 +73,17 @@ public class ItemServiceImpl implements ItemService {
             throw new RuntimeException("This item in someone's cart. If you want to edit this item use ?force=true");
         }
         return saveItemFromDto(item, dto);
+    }
+
+    @Override
+    public List<Item> findAll(String description, List<String> tags) {
+        Set<String> set = tags == null ? new HashSet<>() : new HashSet<>(tags);
+
+        return itemRepository
+                .findByDescriptionAndTags(description,
+                        tagService.mapTags(set),
+                        set.size()
+                );
     }
 
     private Item saveItemFromDto(Item item, ItemDto dto) {

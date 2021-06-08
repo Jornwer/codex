@@ -6,6 +6,5 @@ import com.jornwer.codex.dto.UserPayload;
 
 public interface AuthService {
     AuthenticationResponse signup(UserPayload request);
-
     AuthenticationResponse login(LoginRequest request);
 }
