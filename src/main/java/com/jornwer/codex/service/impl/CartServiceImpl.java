@@ -81,4 +81,9 @@ public class CartServiceImpl implements CartService {
 
         mailService.sendMailTo(user.getEmail(), mailText.toString());
     }
+
+    @Override
+    public List<Cart> findCartsContainingItem(Item item) {
+        return cartRepository.findByItemsContaining(item);
+    }
 }

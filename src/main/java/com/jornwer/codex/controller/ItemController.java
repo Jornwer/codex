@@ -1,7 +1,6 @@
 package com.jornwer.codex.controller;
 
 import com.jornwer.codex.dto.ItemDto;
-import com.jornwer.codex.exception.DuplicateException;
 import com.jornwer.codex.model.Item;
 import com.jornwer.codex.service.ItemService;
 import lombok.AllArgsConstructor;
@@ -20,6 +19,20 @@ public class ItemController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public Item addItem(@RequestBody ItemDto item) {
         return itemService.add(item);
+    }
+
+    @PostMapping(value = "/delete/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public void deleteItem(@PathVariable long id) {
+        itemService.delete(id);
+    }
+
+    @PostMapping(value = "/edit/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Item editItem(@PathVariable long id,
+                         @RequestBody ItemDto item,
+                         @RequestParam(value = "force", defaultValue = "false", required = false) boolean force) {
+        return itemService.edit(id, item, force);
     }
 
     @GetMapping

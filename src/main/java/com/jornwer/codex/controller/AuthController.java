@@ -3,7 +3,6 @@ package com.jornwer.codex.controller;
 import com.jornwer.codex.dto.AuthenticationResponse;
 import com.jornwer.codex.dto.LoginRequest;
 import com.jornwer.codex.dto.UserPayload;
-import com.jornwer.codex.exception.DuplicateException;
 import com.jornwer.codex.service.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;

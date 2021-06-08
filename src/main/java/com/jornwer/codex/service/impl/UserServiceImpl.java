@@ -5,7 +5,6 @@ import com.jornwer.codex.model.Role;
 import com.jornwer.codex.model.User;
 import com.jornwer.codex.repository.UserRepository;
 import com.jornwer.codex.service.UserService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
