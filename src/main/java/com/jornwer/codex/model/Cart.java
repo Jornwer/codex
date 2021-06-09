@@ -1,5 +1,6 @@
 package com.jornwer.codex.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,10 +16,12 @@ import java.util.List;
 @AllArgsConstructor
 public class Cart {
     @Id
+    @ApiModelProperty("1")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @OneToOne
+    @ApiModelProperty("admin")
     private User user;
 
     @ManyToMany

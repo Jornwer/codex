@@ -1,5 +1,6 @@
 package com.jornwer.codex.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,9 +18,11 @@ import javax.persistence.*;
 )
 public class Tag {
     @Id
+    @ApiModelProperty("1")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @ApiModelProperty("wood")
     @Column(nullable = false, unique = true)
     private String name;
 }

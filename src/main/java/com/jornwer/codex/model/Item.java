@@ -1,5 +1,6 @@
 package com.jornwer.codex.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,12 +19,15 @@ import java.util.Set;
 )
 public class Item {
     @Id
+    @ApiModelProperty("1")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @ApiModelProperty("Table")
     @Column(nullable = false, unique = true)
     private String name;
 
+    @ApiModelProperty("Table from IKEA")
     @Column(nullable = false)
     private String description;
 
