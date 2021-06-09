@@ -24,6 +24,6 @@ public class Cart {
     @ApiModelProperty("admin")
     private User user;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Item> items;
 }

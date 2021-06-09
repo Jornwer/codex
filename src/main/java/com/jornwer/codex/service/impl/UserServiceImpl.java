@@ -7,6 +7,7 @@ import com.jornwer.codex.repository.UserRepository;
 import com.jornwer.codex.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getCurrentUser() {
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            throw new NotFoundException("User not found");
+        }
+        String name = authentication.getName();
         return userRepository.findByUsername(name)
                 .orElseThrow(() -> new NotFoundException("User not found"));
     }

@@ -25,7 +25,7 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
 
     @Override
-    public AuthenticationResponse signup(@NotNull UserPayload request) throws DuplicateException {
+    public AuthenticationResponse signup(@NotNull UserPayload request) {
         isUserRegistered(request);
 
         User user = User.builder()
@@ -48,10 +48,12 @@ public class AuthServiceImpl implements AuthService {
     }
 
     private void isUserRegistered(UserPayload payload) throws DuplicateException {
-        userRepository.findByUsername(payload.getUsername())
-                .orElseThrow(() -> new DuplicateException("User with this username already exists"));
-        userRepository.findByEmail(payload.getEmail())
-                .orElseThrow(() -> new DuplicateException("User with this email already exists"));
+        if (userRepository.findByUsername(payload.getUsername()).isPresent()) {
+            throw new DuplicateException("User with this username already exists");
+        }
+        if (userRepository.findByEmail(payload.getEmail()).isPresent()) {
+            throw new DuplicateException("User with this email already exists");
+        }
     }
 
     private AuthenticationResponse generateAuthenticationToken(String username, Role role) {

@@ -31,6 +31,6 @@ public class Item {
     @Column(nullable = false)
     private String description;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Tag> tags;
 }
