@@ -1,7 +1,5 @@
 package com.jornwer.codex.advice;
 
-import com.jornwer.codex.exception.DuplicateException;
-import com.jornwer.codex.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,16 +11,6 @@ import java.nio.file.AccessDeniedException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
-    @ResponseBody
-    @ExceptionHandler({NotFoundException.class, DuplicateException.class})
-    public ModelAndView handleNotFoundExceptionAndDuplicateException(Exception ex) {
-        ModelAndView modelAndView = new ModelAndView(new MappingJackson2JsonView());
-        modelAndView.setStatus(HttpStatus.BAD_REQUEST);
-        modelAndView.addObject("message", ex.getMessage());
-        return modelAndView;
-    }
-
     @ResponseBody
     @ExceptionHandler(AccessDeniedException.class)
     public ModelAndView handleAccessDeniedException(AccessDeniedException ex) {
@@ -38,7 +26,6 @@ public class GlobalExceptionHandler {
         ModelAndView modelAndView = new ModelAndView(new MappingJackson2JsonView());
         modelAndView.setStatus(HttpStatus.BAD_REQUEST);
         modelAndView.addObject("message", ex.getMessage());
-        modelAndView.addObject("error", ex.getClass());
         return modelAndView;
     }
 }
